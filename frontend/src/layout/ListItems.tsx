@@ -46,19 +46,21 @@ export function MainListItems(props: MainListItemsProps)  {
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Page 2" />
+      <ListItemText primary="News" />
+      
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Page 3" />
+      <ListItemText primary="Report" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <LayersIcon />
+        
       </ListItemIcon>
-      <ListItemText primary="Page 4" />
+      <ListItemText primary="Page 40" />
     </ListItemButton>
   </React.Fragment>
 );
