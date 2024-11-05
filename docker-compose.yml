@@ -1,0 +1,15 @@
+version: "3"
+services:
+  frontend:
+    image: macnilacademyfrontend:0.0.1
+    container_name: macnil_academy_frontend
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/home/node/academy
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      context: ./
+      target: development
