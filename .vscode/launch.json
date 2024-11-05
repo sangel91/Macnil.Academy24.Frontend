@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Academy frontend - Chrome",
+        "type": "chrome",
+        "request": "launch",
+        "timeout": 20000,
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}/src",
+        "sourceMapPathOverrides": {
+          "webpack:///src/*": "${webRoot}/*"
+        }
+      },
+      {
+        "name": "Debug CRA Tests",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "${workspaceRoot}/frontend/node_modules/.bin/react-scripts",
+        "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
+        "cwd": "${workspaceRoot}/frontend",
+        "protocol": "inspector",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "env": { "CI": "true" },
+        "disableOptimisticBPs": true
+      }
+    ]
+  }
+  

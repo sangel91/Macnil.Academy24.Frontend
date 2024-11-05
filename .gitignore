@@ -1,0 +1,11 @@
+node_modules
+.cache
+.gitconfig
+.vscode-server
+.npm
+.gnupg
+.bash_history
+.local
+.scannerwork
+.ssh
+/.vs-liveshare-keychain
