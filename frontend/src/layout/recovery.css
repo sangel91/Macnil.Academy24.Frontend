@@ -1,0 +1,31 @@
+  img{
+    width: 159px;
+    height: 47px;
+    top: 268px;
+    left: 444px;
+    gap: 0px;
+    opacity: 0px;  
+}
+
+p { 
+    color:#00000099;
+    font-family: Roboto;
+    font-size: 8px;
+    font-weight: 400;
+  }
+
+  a { 
+    color:#00000099;
+    font-family: Roboto;
+    font-size: 8px;
+    font-weight: 400;
+  }
+
+  
+  button{
+    background-color: #1976D2;
+    color: white;
+    border-color:#1976D2 ;
+    border-radius: 5px 5px 5px 5px;
+  }
+ 

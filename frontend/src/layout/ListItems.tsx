@@ -20,7 +20,7 @@ export function MainListItems(props: MainListItemsProps)  {
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" onClick={() => 
+      <ListItemText primary="bhoo" onClick={() => 
         {
           if (!!props?.callback) {
             props.callback("Dashboard");
@@ -46,7 +46,15 @@ export function MainListItems(props: MainListItemsProps)  {
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Page 2" />
+      <ListItemText primary="recovery" onClick={() => 
+        {
+          if (!!props?.callback) {
+            props.callback("Recovery");
+          }
+          navigate("Recovery"); 
+        }
+      } 
+      />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
