@@ -7,7 +7,7 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
   return (
     <div className="home-page">
-      <h2>Welcome to the Home Page</h2>
+      <h2>sono nella home</h2>
       <button onClick={onLogout}>Logout</button>
     </div>
   );

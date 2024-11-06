@@ -10,59 +10,65 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface MainListItemsProps {
-  callback: (a: any) => any;
+  callback: (page: string, path: string) => void; // Tipizzazione corretta
 }
 
-export function MainListItems(props: MainListItemsProps)  {
+export function MainListItems(props: MainListItemsProps) {
   const navigate = useNavigate();
- return( <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" onClick={() => 
-        {
-          if (!!props?.callback) {
-            props.callback("Dashboard");
-          }
-          navigate("dashboard"); 
-        }
-      }/>
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Page 1" onClick={() => 
-        {
-          if (!!props?.callback) {
-            props.callback("Page 1");
-          }
-          navigate("page1"); 
-        }
-      } />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="News" />
+  
+  return (
+    <React.Fragment>
+      <img src="./macnil_logo.png" alt="" />
+      <ListItemButton>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText
+          primary="Dashboard"
+          onClick={() => {
+            if (props.callback) {
+              props.callback("Dashboard", "/dashboard");  // Passa il nome della pagina e il percorso
+            }
+            navigate("/");  // Navigazione corretta
+          }}
+        />
+      </ListItemButton>
       
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Report" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-        
-      </ListItemIcon>
-      <ListItemText primary="Page 4000000" />
-    </ListItemButton>
-  </React.Fragment>
-);
+      <ListItemButton>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText
+          primary="Page 1"
+          onClick={() => {
+            if (props.callback) {
+              props.callback("Page 1", "/page1");  // Passa il nome della pagina e il percorso
+            }
+            navigate("/page1");  // Navigazione corretta
+          }}
+        />
+      </ListItemButton>
 
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="News" />
+      </ListItemButton>
+
+      <ListItemButton>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Report" />
+      </ListItemButton>
+
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Page 00" />
+      </ListItemButton>
+    </React.Fragment>
+  );
 }

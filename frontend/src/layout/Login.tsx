@@ -112,7 +112,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       );
 
       if (user) {
-        onLogin(); // Chiama la funzione onLogin passata come prop
+        onLogin(); 
         navigate('/home'); // Reindirizza alla home page
       } else {
         setError('Invalid email or password');
