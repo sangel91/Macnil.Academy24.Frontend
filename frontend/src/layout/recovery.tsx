@@ -1,8 +1,17 @@
 import { Container, Grid, Paper, TextField, Button} from '@mui/material';
 import logo from '../academy_macnil_logo.png';
 import './recovery.css';
+import { useNavigate } from 'react-router-dom';
+import { DashboardContent } from './Dashboard';
 
 export function RecoveryContent() {
+
+        const navigate = useNavigate();
+        const codePage = () => {
+            
+            navigate({});
+        };
+
     return (
         <Container sx={{ mt:4, mb: 4 }}>
             <Grid container justifyContent="center" alignItems="center">
@@ -19,8 +28,8 @@ export function RecoveryContent() {
                             <a href=""> Privacy Policy </a>.
                         </p>
                         <Grid item xs={3}>
-                            <Button> 
-                                CONTINUE 
+                            <Button onClick={codePage}> 
+                                CONTINUE
                             </Button>
                         </Grid>
                     </Paper>

@@ -1,3 +1,4 @@
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -154,9 +155,6 @@ export function DashboardContent() {
           <Toolbar />
           <Routes>
             <Route path="/page1"  element={<Page1Content /> } />
-          </Routes>
-          <Routes>
-            <Route path="/recovery"  element={<RecoveryContent /> } />
           </Routes>
           
         </Box>

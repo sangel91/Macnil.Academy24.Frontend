@@ -22,10 +22,9 @@ p {
   }
 
   
-  button{
-    background-color: #1976D2;
+  .Button {
+    background-color: #1976D2!important;
     color: white;
-    border-color:#1976D2 ;
     border-radius: 5px 5px 5px 5px;
   }
  
