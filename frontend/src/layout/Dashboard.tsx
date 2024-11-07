@@ -1,3 +1,4 @@
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -16,13 +17,14 @@ import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import { MainListItems } from "./ListItems";
 import { Page1Content } from "./Page1";
+import { Button } from "@mui/material";
+import ModalDetail from "./ModalDetail";
+import "./containerButton.css";
 
 const drawerWidth: number = 240;
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
@@ -40,7 +42,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -66,9 +67,7 @@ const Drawer = styled(MuiDrawer, {
     }),
   },
 }));
-
 const mdTheme = createTheme();
-
 export function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -79,9 +78,12 @@ export function DashboardContent() {
     if (currentPage) {
       console.log(currentPage);
     }
-  }, [currentPage]) 
+  }, [currentPage])
 
-
+  const [isModalOpen, setModalVisibilty] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    console.log(isModalOpen)
+  },[isModalOpen])
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -151,10 +153,17 @@ export function DashboardContent() {
           }}
         >
           <Toolbar />
+          {/* consente al componente ModalDetail di comunicare con il componente genitore per chiudere la finestra modale. */}
+          <ModalDetail closeCallback={setModalVisibilty} isVisible={isModalOpen} />
+          {/* Potrei anche utilizzare la proprietà SX per definire rapidamente gli stili in-line direttamente all'interno dei componenti */}
+          <Box className = "containerButton"> 
+            {/* al click sul botttone mi permette di visualizzare il contenuto */}
+            <Button className="back" onClick={() => setModalVisibilty(true)}>Stamp</Button>
+          </Box>
           <Routes>
-            <Route path="/page1"  element={<Page1Content /> } />
+            <Route path="/page1" element={<Page1Content />} />
           </Routes>
-          
+
         </Box>
       </Box>
     </ThemeProvider>
