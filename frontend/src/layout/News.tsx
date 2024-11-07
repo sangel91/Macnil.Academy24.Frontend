@@ -6,7 +6,7 @@ import { Dashboard } from './Home';
 // Rinomina l'interfaccia per evitare conflitti
 export interface INews {
   id: number;
-  title: string;
+  titolo: string;
   body: string;
 }
 
@@ -17,7 +17,7 @@ const News: React.FC = () => {
     // Funzione per recuperare le news dal backend
     const fetchNews = async () => {
       // prod
-      const response = await fetch('http://localhost:8090/api/v1/broadcasts');
+      const response = await fetch('http://localhost:8090/api/v1/news');
 
      // test
       //const response = await fetch('./posts.json');
@@ -38,7 +38,7 @@ const News: React.FC = () => {
         <ul>
           {newsList.map((news) => (
             <li key={news.id}>
-              <h2>{news.title}</h2>
+              <h2>{news.titolo}</h2>
               <p>{news.body}</p>
             </li>
           ))}

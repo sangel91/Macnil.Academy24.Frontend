@@ -21,7 +21,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 // Definizione dell'interfaccia INews
 interface INews {
   id: number;
-  title: string;
+  titolo: string;
   body: string;
 }
 
@@ -34,7 +34,7 @@ const News: React.FC = () => {
     const fetchNews = async () => {
       try {
         // prod
-        const response = await fetch('http://localhost:8090/api/v1/broadcasts');
+        const response = await fetch('http://localhost:8090/api/v1/news');
        //// test locale
         //const response = await fetch('./posts.json');
         if (!response.ok) {
@@ -57,7 +57,7 @@ const News: React.FC = () => {
     <h1>Ultima News</h1>
     {lastNews ? (
       <div>
-        <h2>{lastNews.title}</h2>
+        <h2>{lastNews.titolo}</h2>
         <p>{lastNews.body}</p>
       </div>
     ) : (
