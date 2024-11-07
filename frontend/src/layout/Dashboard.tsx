@@ -17,7 +17,6 @@ import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import { MainListItems } from "./ListItems";
 import { Page1Content } from "./Page1";
-import {RecoveryContent} from "./recovery";
 
 const drawerWidth: number = 240;
 

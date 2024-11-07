@@ -2,14 +2,30 @@ import { Container, Grid, Paper, TextField, Button} from '@mui/material';
 import logo from '../academy_macnil_logo.png';
 import './recovery.css';
 import { useNavigate } from 'react-router-dom';
-import { DashboardContent } from './Dashboard';
+import './Page1';
+import { useState } from 'react';
+import axios from 'axios';
+
 
 export function RecoveryContent() {
-
+        
         const navigate = useNavigate();
-        const codePage = () => {
-            
-            navigate({});
+        const [email, setEmail] = useState<string>('');
+        const [error, setError] = useState<string>('');
+        
+        const codePage = async () => {
+          try {
+            const response = await axios.post('/api/check-email', { email });
+      
+            if (response.data.exists) {
+              navigate('/Page1');  
+            } else {
+              setError('Email not found. Please check and try again.');
+            }
+          } 
+          catch (err) {
+            setError('An error occurred. Please try again later.');
+          }
         };
 
     return (
@@ -19,7 +35,8 @@ export function RecoveryContent() {
                     <img src={logo} className="academy-logo" alt="Academy Logo" />
                     <Paper sx={{ p: 3, flexDirection: 'column', width:552}}>
                         <h3>Continue with Email</h3>
-                        <TextField  label="Email address"  type="email"   fullWidth sx={{ mb: 1 }}/>
+                        <TextField  value={email} label="Email address"  type="email"   fullWidth sx={{ mb: 1 }} onChange={(e) => setEmail(e.target.value)}required/>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
                         <p>
                             By continuing, you agree that we create an account for you 
                             (unless already created), and accept our 

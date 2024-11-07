@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { DashboardContent } from "./layout/Dashboard";
 import { RecoveryContent } from "./layout/recovery";
-
+import { Page1Content } from "./layout/Page1";
 function App() {
   const loginDone = () => {
     console.log("Successfully logged in.");
@@ -17,6 +17,7 @@ function App() {
         <Routes>
           {/* <Route path="/*" element={<DashboardContent />} /> */}
           <Route path="/*" element={<RecoveryContent/>} />
+          <Route path="/Page1" element={<Page1Content />} />
         </Routes>
       </BrowserRouter>
     </>
