@@ -1,4 +1,3 @@
-
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -6,7 +5,6 @@ import Chart from "./Chart";
 import { Copyright } from "./Copyright";
 import CustomTable from "./CustomTable";
 import Tale from "./Tale";
-
 export function Page1Content() {
 
     return (
@@ -48,4 +46,3 @@ export function Page1Content() {
         <Copyright sx={{ pt: 4 }} />
       </Container>);
   }
-  

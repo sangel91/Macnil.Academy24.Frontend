@@ -8,67 +8,66 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import "./ListItems.css";
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import HomeIcon from '@mui/icons-material/Home';
+
+
 
 interface MainListItemsProps {
-  callback: (a: any) => any;
+  callback: (page: string, path: string) => void; // Tipizzazione corretta
 }
 
-export function MainListItems(props: MainListItemsProps)  {
+export function MainListItems(props: MainListItemsProps) {
   const navigate = useNavigate();
- return( <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="bhoo" onClick={() => 
-        {
-          if (!!props?.callback) {
-            props.callback("Dashboard");
-          }
-          navigate("dashboard"); 
-        }
-      }/>
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Page 1" onClick={() => 
-        {
-          if (!!props?.callback) {
-            props.callback("Page 1");
-          }
-          navigate("page1"); 
-        }
-      } />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="recovery" onClick={() => 
-        {
-          if (!!props?.callback) {
-            props.callback("Recovery");
-          }
-          navigate("Recovery"); 
-        }
-      } 
-      />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Page 3" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Page 4" />
-    </ListItemButton>
-  </React.Fragment>
-);
+  
+  return (
+    <>
+    
+        {/* <img className="logo" src="./macnil_logo.png" alt="" /> */}
+      <ListItemButton>
+        <ListItemIcon>
+        <HomeIcon />
+        </ListItemIcon>
+        <ListItemText
+          primary="Home"
+          onClick={() => {
+            if (props.callback) {
+              props.callback("Dashboard", "/dashboard");  // Passa il nome della pagina e il percorso
+            }
+            navigate("/");  // Navigazione corretta
+          }}
+        />
+      </ListItemButton>
+      
+      
 
+     
+
+      <ListItemButton>
+        <ListItemIcon>
+        
+        <NewspaperIcon />
+        </ListItemIcon>
+        <ListItemText primary="News" 
+        onClick={() => {
+          if (props.callback) {
+            props.callback("News", "/news");  // Passa il nome della pagina e il percorso
+          }
+          navigate("/news");  // Navigazione corretta
+        }}
+        />
+      </ListItemButton>
+
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Report" />
+      </ListItemButton>
+
+      
+    
+    </>
+  );
 }
