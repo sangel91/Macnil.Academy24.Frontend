@@ -1,3 +1,16 @@
-.test{
-    color: rgb(0, 0, 0);
+.forgot-pass:hover{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+.forgot-pass{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.login-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

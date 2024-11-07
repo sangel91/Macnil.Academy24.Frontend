@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
@@ -123,14 +124,28 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="login-page">
+    <>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-6">
         <img src="./macnil_logo.png" alt="ciao" />
-      <h2 className='test'>Login</h2>
+        <h1 className='mb-5 mt-3'> Login into Macnil Academy</h1>
+        </div>
+      </div>
+    </div>
+
+    <div className="container">
+      <div className="row justify-content-center my-4">
+        <div className="col-12 col-md-6">
+        
+      <h3 className='test'>Login</h3>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleLogin}>
         <div>
-          <label htmlFor="email">Email:</label>
+          {/* <label htmlFor="email">Email:</label> */}
           <input
+            className='my-2 w-100'
+            placeholder="Enter email"
             type="email"
             id="email"
             value={email}
@@ -139,8 +154,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          {/* <label htmlFor="password">Password:</label> */}
           <input
+            
+            placeholder="Enter Password"
+            className='inputPassword mb-3 w-100'
             type="password"
             id="password"
             value={password}
@@ -148,15 +166,19 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button className='btn btn-primary my-3 w-100' type="submit">Login</button>
       </form>
-      <button
-        onClick={() => navigate('/forgot-password')}
-        className="forgot-password"
-      >
+      
+      <a className='forgot-pass my-5' onClick={() => navigate('/forgot-password')}>
         Forgot Password?
-      </button>
+      </a>
     </div>
+        </div>
+      </div>
+    
+
+    
+    </>
   );
 };
 

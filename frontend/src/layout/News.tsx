@@ -1,64 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Dashboard } from './Dashboard';
 
-// Definiamo il tipo dei dati che ci aspettiamo (un post ha un id, un nome e un testo)
-interface Post {
+import React, { useEffect, useState } from 'react';
+import { Dashboard } from './Home';
+// import { Dashboard } from './Dashboard';
+
+// Rinomina l'interfaccia per evitare conflitti
+export interface INews {
   id: number;
-  name: string;
-  text: string;
+  title: string;
+  body: string;
 }
 
-export function News() {
-  // Stato per i post
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+const News: React.FC = () => {
+  const [newsList, setNewsList] = useState<INews[] | null>(null);
 
   useEffect(() => {
-    // Carica il file JSON dalla cartella public
-    fetch('/posts.json')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Impossibile caricare i post');
-        }
-        return response.json();
-      })
-      .then((data: Post[]) => {
-        setPosts(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+    // Funzione per recuperare le news dal backend
+    const fetchNews = async () => {
+      // prod
+      const response = await fetch('http://localhost:8090/api/v1/broadcasts');
+
+     // test
+      //const response = await fetch('./posts.json');
+      if (!response.ok) {
+        throw new Error(`Errore nella richiesta: ${response.status}`);
+      }
+      const data: INews[] = await response.json();
+      setNewsList(data);
+    };
+    fetchNews();
   }, []);
 
-  if (loading) {
-    return <p>Caricamento in corso...</p>;
-  }
-
-  if (error) {
-    return <p>Errore: {error}</p>;
-  }
-
   return (
-    <>
     <Dashboard>
-
     <div>
-        
-      <h1>Neeews</h1>
-      <div className="posts-container">
-        {posts.map((post) => (
-          <div key={post.id} className="post-card">
-            <h3>{post.name}</h3>
-            <p>{post.text}</p>
-          </div>
-        ))}
-      </div>
+      <h1>Elenco delle News</h1>
+      {newsList && newsList.length > 0 ? (
+        <ul>
+          {newsList.map((news) => (
+            <li key={news.id}>
+              <h2>{news.title}</h2>
+              <p>{news.body}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Nessuna news disponibile.</p>
+      )}
     </div>
-    
     </Dashboard>
-    </>
+    
   );
-}
+};
+
+export default News; // Default export del componente

@@ -8,6 +8,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import "./ListItems.css";
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import HomeIcon from '@mui/icons-material/Home';
+
+
 
 interface MainListItemsProps {
   callback: (page: string, path: string) => void; // Tipizzazione corretta
@@ -17,14 +22,15 @@ export function MainListItems(props: MainListItemsProps) {
   const navigate = useNavigate();
   
   return (
-    <React.Fragment>
-      <img src="./macnil_logo.png" alt="" />
+    <>
+    
+        {/* <img className="logo" src="./macnil_logo.png" alt="" /> */}
       <ListItemButton>
         <ListItemIcon>
-          <DashboardIcon />
+        <HomeIcon />
         </ListItemIcon>
         <ListItemText
-          primary="Dashboard"
+          primary="Home"
           onClick={() => {
             if (props.callback) {
               props.callback("Dashboard", "/dashboard");  // Passa il nome della pagina e il percorso
@@ -34,41 +40,34 @@ export function MainListItems(props: MainListItemsProps) {
         />
       </ListItemButton>
       
+      
+
+     
+
       <ListItemButton>
         <ListItemIcon>
-          <ShoppingCartIcon />
+        
+        <NewspaperIcon />
         </ListItemIcon>
-        <ListItemText
-          primary="Page 1"
-          onClick={() => {
-            if (props.callback) {
-              props.callback("Page 1", "/page1");  // Passa il nome della pagina e il percorso
-            }
-            navigate("/page1");  // Navigazione corretta
-          }}
+        <ListItemText primary="News" 
+        onClick={() => {
+          if (props.callback) {
+            props.callback("News", "/news");  // Passa il nome della pagina e il percorso
+          }
+          navigate("/news");  // Navigazione corretta
+        }}
         />
-      </ListItemButton>
-
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="News" />
-      </ListItemButton>
-
-      <ListItemButton>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Report" />
       </ListItemButton>
 
       <ListItemButton>
         <ListItemIcon>
           <LayersIcon />
         </ListItemIcon>
-        <ListItemText primary="Page 00" />
+        <ListItemText primary="Report" />
       </ListItemButton>
-    </React.Fragment>
+
+      
+    
+    </>
   );
 }
