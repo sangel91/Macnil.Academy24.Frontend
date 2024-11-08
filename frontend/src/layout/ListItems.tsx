@@ -1,64 +1,62 @@
-import BarChartIcon from "@mui/icons-material/BarChart";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+
+
 import LayersIcon from "@mui/icons-material/Layers";
-import PeopleIcon from "@mui/icons-material/People";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import "./ListItems.css";
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import HomeIcon from '@mui/icons-material/Home';
-
-
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 interface MainListItemsProps {
-  callback: (page: string, path: string) => void; // Tipizzazione corretta
+  callback: (page: string, path: string) => void;
 }
 
 export function MainListItems(props: MainListItemsProps) {
   const navigate = useNavigate();
-  
+
+  // Recupero i dati dell'utente dal localStorage
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAuthenticated = user && user.email && user.password;
+  const isAdmin = isAuthenticated ? user.isAdmin : false;
+
   return (
     <>
-    
-        {/* <img className="logo" src="./macnil_logo.png" alt="" /> */}
+      {/* Collegamento a Home */}
       <ListItemButton>
         <ListItemIcon>
-        <HomeIcon />
+          <HomeIcon />
         </ListItemIcon>
         <ListItemText
           primary="Home"
           onClick={() => {
             if (props.callback) {
-              props.callback("Dashboard", "/dashboard");  // Passa il nome della pagina e il percorso
+              props.callback("Dashboard", "/dashboard");
             }
-            navigate("/");  // Navigazione corretta
+            navigate("/");
           }}
         />
       </ListItemButton>
-      
-      
 
-     
-
+      {/* Collegamento a News */}
       <ListItemButton>
         <ListItemIcon>
-        
-        <NewspaperIcon />
+          <NewspaperIcon />
         </ListItemIcon>
-        <ListItemText primary="News" 
-        onClick={() => {
-          if (props.callback) {
-            props.callback("News", "/news");  // Passa il nome della pagina e il percorso
-          }
-          navigate("/news");  // Navigazione corretta
-        }}
+        <ListItemText
+          primary="News"
+          onClick={() => {
+            if (props.callback) {
+              props.callback("News", "/news");
+            }
+            navigate("/news");
+          }}
         />
       </ListItemButton>
 
+      {/* Collegamento a Report (da implementare) */}
       <ListItemButton>
         <ListItemIcon>
           <LayersIcon />
@@ -66,8 +64,17 @@ export function MainListItems(props: MainListItemsProps) {
         <ListItemText primary="Report" />
       </ListItemButton>
 
-      
-    
+      {/* Collegamento a Users (visibile solo se l'utente è un admin) */}
+      {isAuthenticated && isAdmin && (
+        <ListItemButton onClick={() => navigate("/users")}>
+          <ListItemIcon>
+           
+          <AdminPanelSettingsIcon/>
+
+          </ListItemIcon>
+          <ListItemText primary="Users" />
+        </ListItemButton>
+      )}
     </>
   );
 }

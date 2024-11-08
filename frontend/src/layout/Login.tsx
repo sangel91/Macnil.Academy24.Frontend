@@ -1,11 +1,11 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 interface User {
   email: string;
   password: string;
+  isAdmin: boolean;
 }
 
 interface LoginProps {
@@ -18,18 +18,43 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Verifica se l'utente è già loggato
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user: User = JSON.parse(storedUser);
+      if (user.isAdmin) {
+        navigate("/users"); // Se l'utente è un admin, naviga alla pagina /users
+      } else {
+        navigate("/home"); // Altrimenti, naviga alla pagina /home
+      }
+    }
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
+      //// prod con api da BE Carmela
+      //const response = await fetch("http://localhost:8090/api/auth/login");
+
+      // da test
       const response = await fetch("/utenti.json");
       const users: User[] = await response.json();
 
       const user = users.find((u) => u.email === email && u.password === password);
 
       if (user) {
-        onLogin(); 
-        navigate("/home");
+        // Salva l'utente e lo stato isAdmin in localStorage
+        localStorage.setItem("user", JSON.stringify(user));
+
+        onLogin(); // Funzione che puoi usare per gestire lo stato globale di login
+
+        if (user.isAdmin) {
+          navigate("/home"); // Naviga alla pagina /users se l'utente è un admin
+        } else {
+          navigate("/home"); // Naviga alla pagina home per utenti non-admin
+        }
       } else {
         setError("Invalid email or password");
       }
@@ -43,7 +68,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-md-6">
-            <img src="./macnil_logo.png" alt="ciao" />
+            <img src="./macnil_logo.png" alt="macnil logo" />
             <h1 className="mb-5 mt-3">Login into Macnil Academy</h1>
           </div>
         </div>
@@ -93,3 +118,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 };
 
 export default Login;
+
+
+

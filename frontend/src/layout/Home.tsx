@@ -19,6 +19,7 @@ import { ReactNode, useEffect, useState } from "react";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
+
 // Definizione dell'interfaccia INews
 interface INews {
   id: number;
@@ -131,7 +132,7 @@ const Drawer = styled(MuiDrawer, {
 // Creazione del tema
 const mdTheme = createTheme();
 
-// Funzione per il layout del Dashboard
+
 export function Home({ children }: { children?: ReactNode }) {
 
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
@@ -160,20 +161,7 @@ export function Home({ children }: { children?: ReactNode }) {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={isDrawerOpen}>
-          <Toolbar sx={{ pr: "24px" }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: "36px",
-                ...(isDrawerOpen && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-
+          <Toolbar className="d-flex justify-content-end ">
             <IconButton color="inherit">
               <AccountCircleIcon className="mx-3" />
             </IconButton>
@@ -189,7 +177,7 @@ export function Home({ children }: { children?: ReactNode }) {
               px: [1],
             }}
           >
-            <img className="logo mx-4" src="./macnil_logo.png" alt="" />
+            <img className="logo mx-4" src="./macnil_logo.png" alt="logo" />
           </Toolbar>
           <Divider />
           <List component="nav">
@@ -233,7 +221,7 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={isDrawerOpen}>
-          <Toolbar sx={{ pr: "24px" }}>
+          <Toolbar className="d-flex justify-content-end ">
             <IconButton
               edge="start"
               color="inherit"
@@ -247,7 +235,7 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
               <MenuIcon />
             </IconButton>
 
-            <div className="justify-content-end align-items-end">
+            <div >
               <IconButton color="inherit">
                 <AccountCircleIcon className="mx-3" />
               </IconButton>
