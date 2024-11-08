@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './layout/Login';
 import Home from './layout/Home';
 import News from './layout/News'; 
+import { RecoveryContent } from './layout/recovery';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
@@ -52,7 +53,11 @@ const App: React.FC = () => {
             )
           }
         />
+
+      {/* Rotta per il forgot-password */}
+      <Route path="/forgot-password" element={<RecoveryContent />} />
       </Routes>
+
     </BrowserRouter>
   );
 };

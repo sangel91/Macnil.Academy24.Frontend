@@ -81,6 +81,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
+import { RecoveryContent } from "./recovery"
 
 // Definizione del tipo per gli utenti
 interface User {

@@ -1,8 +1,7 @@
-import { Container, Grid, Paper, TextField, Button} from '@mui/material';
+import { Container, Grid, Paper, TextField} from '@mui/material';
 import logo from '../academy_macnil_logo.png';
 import './recovery.css';
 import { useNavigate } from 'react-router-dom';
-import './Page1';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -15,10 +14,10 @@ export function RecoveryContent() {
         
         const codePage = async () => {
           try {
-            const response = await axios.post('/api/check-email', { email });
+            const response = await axios.post('http://localhost:8090/api/v1/forgot-password?', { email });
       
             if (response.data.exists) {
-              navigate('/Page1');  
+              navigate('/code-page');  
             } else {
               setError('Email not found. Please check and try again.');
             }
@@ -45,9 +44,10 @@ export function RecoveryContent() {
                             <a href=""> Privacy Policy </a>.
                         </p>
                         <Grid item xs={3}>
-                            <Button onClick={codePage}> 
+                        <button className='btn btn-primary my-3 w-100' type="submit" onClick={codePage}>CONTINUE</button>
+                            {/* <Button className='btn btn-primary my-3 w-100' type="submit" onClick={codePage}> 
                                 CONTINUE
-                            </Button>
+                            </Button> */}
                         </Grid>
                     </Paper>
                 </Grid>
