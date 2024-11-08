@@ -1,0 +1,18 @@
+[
+    {
+      "id": 1,
+      "name": "Post 1",
+      "text": "Questo è il primo post."
+    },
+    {
+      "id": 2,
+      "name": "Post 2",
+      "text": "Questo è il secondo post."
+    },
+    {
+      "id": 3,
+      "name": "Post 3",
+      "text": "Ecco il terzo post."
+    }
+  ]
+  
