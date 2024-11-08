@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 import MenuIcon from "@mui/icons-material/Menu";
-//import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,17 +26,16 @@ interface INews {
   body: string;
 }
 
-
+/////////////// recupero l'ultima news da mostrare in sezione home (singola card task di Marcello)
 const News: React.FC = () => {
   const [newsList, setNewsList] = useState<INews[] | null>(null);
 
   useEffect(() => {
-    
     const fetchNews = async () => {
       try {
         // prod
-        const response = await fetch('http://localhost:8090/api/v1/news');
-       //// test locale
+        const response = await fetch("http://localhost:8090/api/v1/news");
+        //// test locale
         //const response = await fetch('./posts.json');
         if (!response.ok) {
           throw new Error(`Errore nella richiesta: ${response.status}`);
@@ -50,20 +50,21 @@ const News: React.FC = () => {
     fetchNews();
   }, []);
 
-  const lastNews = newsList && newsList.length > 0 ? newsList[newsList.length - 1] : null;
+  const lastNews =
+    newsList && newsList.length > 0 ? newsList[newsList.length - 1] : null;
 
   return (
     <div>
-    <h1>Ultima News</h1>
-    {lastNews ? (
-      <div>
-        <h2>{lastNews.titolo}</h2>
-        <p>{lastNews.body}</p>
-      </div>
-    ) : (
-      <p>Nessuna news disponibile.</p>
-    )}
-  </div>
+      <h1>Ultima News</h1>
+      {lastNews ? (
+        <div>
+          <h2>{lastNews.titolo}</h2>
+          <p>{lastNews.body}</p>
+        </div>
+      ) : (
+        <p>Nessuna news disponibile.</p>
+      )}
+    </div>
   );
 };
 
@@ -131,13 +132,14 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 // Funzione per il layout del Dashboard
-export function Dashboard({ children }: { children?: ReactNode }) {
+export function Home({ children }: { children?: ReactNode }) {
+
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const [currentPage, setCurrentPage] = React.useState<string>("Dashboard");
+  const [currentPage, setCurrentPage] = React.useState<string>("Home");
   const navigate = useNavigate();
 
   const handleNavigation = (page: string, path: string) => {
@@ -150,6 +152,8 @@ export function Dashboard({ children }: { children?: ReactNode }) {
       console.log(currentPage);
     }
   }, [currentPage]);
+
+  /////////////////// questo return mi gestisce la parte grafica generale della sezione news
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -169,11 +173,22 @@ export function Dashboard({ children }: { children?: ReactNode }) {
             >
               <MenuIcon />
             </IconButton>
+
+            <IconButton color="inherit">
+              <AccountCircleIcon className="mx-3" />
+            </IconButton>
           </Toolbar>
         </AppBar>
 
         <Drawer variant="permanent" open={isDrawerOpen}>
-          <Toolbar sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", px: [1] }}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              px: [1],
+            }}
+          >
             <img className="logo mx-4" src="./macnil_logo.png" alt="" />
           </Toolbar>
           <Divider />
@@ -231,17 +246,27 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
             >
               <MenuIcon />
             </IconButton>
-            <IconButton color="inherit">
-              <AccountCircleIcon className="mx-3" />
-            </IconButton>
-            <IconButton color="inherit">
-              <ExitToAppIcon onClick={onLogout} className="mx-3" />
-            </IconButton>
+
+            <div className="justify-content-end align-items-end">
+              <IconButton color="inherit">
+                <AccountCircleIcon className="mx-3" />
+              </IconButton>
+              <IconButton color="inherit">
+                <ExitToAppIcon onClick={onLogout} className="mx-3" />
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
 
         <Drawer variant="permanent" open={isDrawerOpen}>
-          <Toolbar sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", px: [1] }}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              px: [1],
+            }}
+          >
             <img className="logo mx-4" src="./macnil_logo.png" alt="" />
           </Toolbar>
           <Divider />
@@ -263,7 +288,7 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
           }}
         >
           <Toolbar />
-          <News /> {/* Qui viene incluso il componente News */}
+          <News />
         </Box>
       </Box>
     </ThemeProvider>
@@ -271,4 +296,3 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
 };
 
 export default HomePage;
-

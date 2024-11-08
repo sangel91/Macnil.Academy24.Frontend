@@ -1,14 +1,18 @@
+import React, {  useEffect, useState } from "react";
 
-import React, { useEffect, useState } from 'react';
-import { Dashboard } from './Home';
-// import { Dashboard } from './Dashboard';
+import   {Home} from "./Home";
+import "./News.css";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-// Rinomina l'interfaccia per evitare conflitti
+
 export interface INews {
   id: number;
   titolo: string;
   body: string;
 }
+
+
+
 
 const News: React.FC = () => {
   const [newsList, setNewsList] = useState<INews[] | null>(null);
@@ -16,11 +20,12 @@ const News: React.FC = () => {
   useEffect(() => {
     // Funzione per recuperare le news dal backend
     const fetchNews = async () => {
-      // prod
-      const response = await fetch('http://localhost:8090/api/v1/news');
+      // prod con api da BE Marcello
+      const response = await fetch("http://localhost:8090/api/v1/news");
 
-     // test
+      // test
       //const response = await fetch('./posts.json');
+
       if (!response.ok) {
         throw new Error(`Errore nella richiesta: ${response.status}`);
       }
@@ -30,26 +35,41 @@ const News: React.FC = () => {
     fetchNews();
   }, []);
 
+
+
+
   return (
-    <Dashboard>
-    <div>
-      <h1>Elenco delle News</h1>
-      {newsList && newsList.length > 0 ? (
-        <ul>
-          {newsList.map((news) => (
-            <li key={news.id}>
-              <h2>{news.titolo}</h2>
-              <p>{news.body}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Nessuna news disponibile.</p>
-      )}
-    </div>
-    </Dashboard>
-    
+    <>
+     
+
+    <Home >
+      <div>
+        {newsList && newsList.length > 0 ? (
+          <div className="container">
+            {newsList.map((news) => (
+              <div className="row justify-content-center mt-5" key={news.id}>
+                <div className=" col-10  card  mx-2">
+                  <div className="card-body">
+                    <h5 className="card-title text-capitalize fw-semibold">
+                      {news.titolo}
+                    </h5>
+                    <p className="card-text ">{news.body}</p>
+                  </div>
+                  <button className="btn  buttoncard text-primary my-1">
+                    <VisibilityIcon className=" buttoncard my-1" /> Watch
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Nessuna news disponibile.</p>
+        )}
+      </div>
+      </Home>
+      </>
+   
   );
 };
 
-export default News; // Default export del componente
+export default News;
