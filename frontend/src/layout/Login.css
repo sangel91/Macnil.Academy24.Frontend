@@ -2,6 +2,7 @@
     cursor: pointer;
     text-decoration: none;
     color: black;
+    font-size: large;
 }
 .forgot-pass{
     cursor: pointer;

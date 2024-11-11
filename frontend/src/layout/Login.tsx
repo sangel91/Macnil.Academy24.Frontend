@@ -1,87 +1,8 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-
-// interface LoginProps {
-//   onLogin: () => void;
-// }
-
-// // Una funzione tradizionale per definire il componente
-// function Login({ onLogin }: LoginProps) {
-//   const [email, setEmail] = useState<string>('');
-//   const [password, setPassword] = useState<string>('');
-//   const [error, setError] = useState<string>('');
-//   const navigate = useNavigate();
-
-//   const handleLogin = async (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await fetch('./utenti.json', {
-//         // method: 'POST',
-//         // headers: { 'Content-Type': 'application/json' },
-//         // body: JSON.stringify({ email, password }),
-//         // credentials: 'include',
-//         method: 'GET',
-//         headers: { 'Content-Type': 'application/json' }
-        
-//       });
-
-//       if (response.ok) {
-//         onLogin(); // Chiama la funzione onLogin passata come prop
-//         navigate('/home'); // Reindirizza alla home page
-//       } else {
-//         setError('Invalid email or password');
-//       }
-//     } catch (error) {
-//       setError('An error occurred. Please try again.');
-//     }
-//   };
-
-//   return (
-//     <div className="login-page">
-//       <h2>Login</h2>
-//       {error && <p className="error-message">{error}</p>}
-//       <form onSubmit={handleLogin}>
-//         <div>
-//           <label htmlFor="email">Email:</label>
-//           <input
-//             type="email"
-//             id="email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="password">Password:</label>
-//           <input
-//             type="password"
-//             id="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <button type="submit">Login</button>
-//       </form>
-//       <button
-//         onClick={() => navigate('/forgot-password')}
-//         className="forgot-password"
-//       >
-//         Forgot Password?
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default Login;
 
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
-import { RecoveryContent } from "./recovery"
 
 // Definizione del tipo per gli utenti
 interface User {
