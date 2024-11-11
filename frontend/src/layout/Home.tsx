@@ -1,8 +1,8 @@
+
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 import MenuIcon from "@mui/icons-material/Menu";
-
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -19,7 +19,6 @@ import { ReactNode, useEffect, useState } from "react";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-
 // Definizione dell'interfaccia INews
 interface INews {
   id: number;
@@ -27,20 +26,33 @@ interface INews {
   body: string;
 }
 
-/////////////// recupero l'ultima news da mostrare in sezione home (singola card task di Marcello)
+// Recupero l'ultima news da mostrare in sezione home
 const News: React.FC = () => {
   const [newsList, setNewsList] = useState<INews[] | null>(null);
 
   useEffect(() => {
     const fetchNews = async () => {
+      const token = localStorage.getItem("token"); // Recupera il token dal localStorage
+      if (!token) {
+        console.error("Token non trovato, non puoi fare la richiesta.");
+        return; // Se non c'è un token, non proseguire con la chiamata
+      }
+
       try {
-        // prod
-        const response = await fetch("http://localhost:8090/api/v1/news");
-        //// test locale
-        //const response = await fetch('./posts.json');
+        // Chiamata API per ottenere le news
+        const response = await fetch("http://localhost:8090/api/v1/news", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // Aggiungi il token nell'intestazione Authorization
+          },
+        });
+
         if (!response.ok) {
           throw new Error(`Errore nella richiesta: ${response.status}`);
         }
+
+        // Estrai i dati dalla risposta
         const data: INews[] = await response.json();
         setNewsList(data);
       } catch (error) {
@@ -49,10 +61,10 @@ const News: React.FC = () => {
     };
 
     fetchNews();
-  }, []);
+  }, []); // L'array vuoto indica che questa useEffect è eseguita solo al primo rendering
 
-  const lastNews =
-    newsList && newsList.length > 0 ? newsList[newsList.length - 1] : null;
+
+  const lastNews = newsList && newsList.length > 0 ? newsList[newsList.length - 1] : null;
 
   return (
     <div>
@@ -132,9 +144,8 @@ const Drawer = styled(MuiDrawer, {
 // Creazione del tema
 const mdTheme = createTheme();
 
-
-export function Home({ children }: { children?: ReactNode }) {
-
+// Componente Home che riceve onLogout come prop
+export function Home({ onLogout, children }: HomePageProps) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -154,8 +165,6 @@ export function Home({ children }: { children?: ReactNode }) {
     }
   }, [currentPage]);
 
-  /////////////////// questo return mi gestisce la parte grafica generale della sezione news
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -164,6 +173,9 @@ export function Home({ children }: { children?: ReactNode }) {
           <Toolbar className="d-flex justify-content-end ">
             <IconButton color="inherit">
               <AccountCircleIcon className="mx-3" />
+            </IconButton>
+            <IconButton color="inherit" onClick={onLogout}>
+              <ExitToAppIcon className="mx-3" />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -217,69 +229,11 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
   };
 
   return (
-    <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={isDrawerOpen}>
-          <Toolbar className="d-flex justify-content-end ">
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: "36px",
-                ...(isDrawerOpen && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <div >
-              <IconButton color="inherit">
-                <AccountCircleIcon className="mx-3" />
-              </IconButton>
-              <IconButton color="inherit">
-                <ExitToAppIcon onClick={onLogout} className="mx-3" />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-
-        <Drawer variant="permanent" open={isDrawerOpen}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-            }}
-          >
-            <img className="logo mx-4" src="./macnil_logo.png" alt="" />
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            <MainListItems callback={handleNavigation} />
-          </List>
-        </Drawer>
-
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
-          <News />
-        </Box>
-      </Box>
-    </ThemeProvider>
+    <Home onLogout={onLogout}>
+      <div>
+        <News />
+      </div>
+    </Home>
   );
 };
 
