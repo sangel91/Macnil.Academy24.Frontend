@@ -1,49 +1,58 @@
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Chart from "./Chart";
-import { Copyright } from "./Copyright";
-import CustomTable from "./CustomTable";
-import Tale from "./Tale";
-export function Page1Content() {
 
-    return (
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Grid container spacing={3}>
-          {/* Chart */}
-          <Grid item xs={12} md={8} lg={9}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                height: 240,
-              }}
-            >
-              <Chart />
-            </Paper>
-          </Grid>
-          {/* Recent Deposits */}
-          <Grid item xs={12} md={4} lg={3}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                height: 240,
-              }}
-            >
-              <Tale />
-            </Paper>
-          </Grid>
-          {/* Recent Orders */}
-          <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-              <CustomTable />
-            </Paper>
-          </Grid>
-        </Grid>
-        <Copyright sx={{ pt: 4 }} />
-      </Container>);
-  }
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.js'
+import { useEffect, useState } from "react";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { CardNews } from '../components/CardNews';
+interface News {
+  id: number;
+  titolo: string;
+  body: string;
+  tenantId : number;
+}
+
+
+export function Page1Content() {
+  const [ultimaNews, setUltimaNews] = useState<News | null>(null);
+
+
+    const fetchNews = async () => {
+      
+        const response = await fetch('http://127.0.0.1:8090/api/v1/news/tenants/1');
+        if (!response.ok) {
+          throw new Error(`Errore nella richiesta: ${response.status}`);
+        }
+        const data: News[] = await response.json();
+        if (data.length > 0) {
+          setUltimaNews(data[data.length -1]); // Seleziona ultima  news (data[.lenght -1])
+        }
   
+    };
+ useEffect(() => {
+    fetchNews();
+  }, []);
+
+  return (
+    <>
+    <CardNews></CardNews>
+    <div className="container">
+    <div className="row justify-content-center mt-5">
+      {/* <h1 className="card-title text-capitalize fw-semibold">Ultima News</h1> */}
+      {ultimaNews ? (
+         <div className=" col-10  card  mx-2">
+          <h2 className="card-title text-capitalize fw-semibold">{ultimaNews.titolo}</h2>
+          <p className="card-text ">{ultimaNews.body}</p>
+          <button className="btn  buttoncard text-primary d-flex justify-content-start my-1">
+              
+                    <VisibilityIcon className=" buttoncard my-1" /> Watch
+                  </button>
+                  </div>
+     
+      ) : (
+        <p>Nessuna news disponibile.</p>
+      )}
+    </div>
+         </div>
+    </>
+  );
+}
