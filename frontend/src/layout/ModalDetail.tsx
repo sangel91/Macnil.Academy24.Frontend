@@ -1,87 +1,3 @@
-# Instructions
-
-How to start the application
-
-## Installation with Visual Studio Code and Docker
-
-1. Download [Docker](https://www.docker.com/get-started) (On Windows, if not enabled, see the documentation [WSL2](https://docs.docker.com/desktop/windows/wsl/))
-2. Download [Visual Studio Code](https://code.visualstudio.com/)
-3. Add the following extensions in Visual Studio Code:
-
-- [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-- [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
-- [Remote - Container](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-
-4. Clone locally your desired repository
-```bash
-git clone [REPOSITORY_URL]
-```
-
-5. Move into the folder with the terminal
-```bash
-mv [REPOSITORY_FOLDER_NAME]
-```
-6. Type on terminal:
-```bash
-code .
-```
-
-7. Once Visual Studio Code is open, click "reopen on container" on the bottom right
-8. Open a new terminal in Visual Studio Code and type:
-```bash
-cd frontend
-
-npm install
-```
-
-## Installation only with Docker
-
-1. Download [Docker](https://www.docker.com/get-started) (On Windows, if not enabled, see the documentation [WSL2](https://docs.docker.com/desktop/windows/wsl/))
-2. Clone locally your desired repository
-```bash
-git clone [REPOSITORY_URL]
-```
-
-3. Move into the folder with the terminal
-```bash
-mv [REPOSITORY_FOLDER_NAME]
-```
-4. Type on terminal:
-```bash
-docker-compose up -d
-```
-
-5.  Once the container has been created, attach the terminal to it by the means of the following instruction:
-```bash
-docker exec -it gtfleet_frontend
-```
-
-6. Inside the attached terminal, type:
-
-```bash
-cd /home/node/frontend
-
-npm install
-```
-
-## Usage
-
-Start the application with:
-
-```bash
-#if use installation only docker go on the correct folder with "cd /home/node"
-cd frontend
-
-npm start
-```
-
-Go on [localhost](http://localhost:3000)
-
-
-
-
-
-
 // import { DateRange } from "@mui/icons-material";
 import { Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -133,40 +49,42 @@ const ModalDetail = ({
 
 
     const onSave = () => {
-        const formData = new FormData();
-
-
-        formData.append("location", form.location)
-        formData.append("date", form.date)
-        formData.append("hour_in", form.time + ":00")
-        // formData.append("hour_out", form.time + ":00")
-        formData.append("action", form.action)
-        formData.append("notes", form.notes)
-
-
+        // Creiamo l'oggetto JSON con i dati da inviare
+        const dataToSend = {
+            location: form.location,
+            date: form.date,
+            hour_in: form.time + ":00", // Aggiungi i minuti per un formato corretto (es. "08:00")
+            hour_out: form.time + ":00", // Se hai bisogno di "hour_out" in futuro
+            action: form.action,
+            notes: form.notes,
+        };
+    
         // URL a cui inviare i dati
         const url = 'http://localhost:8090/api/v1/entry'; // Cambia con il tuo endpoint
-
-
+    
         // Opzioni per la richiesta POST
-        const opzioni = {
+        const options = {
             method: 'POST',
-            body: formData // Dati da inviare nel corpo della richiesta
+            headers: {
+                'Content-Type': 'application/json', // Dichiariamo il formato JSON
+            },
+            body: JSON.stringify(dataToSend), // Serializziamo l'oggetto JSON
         };
-
-
+    
         // Chiamata POST con fetch
-        fetch(url, opzioni)
-            .then(response => {
-                return response.json(); // Parse della risposta JSON
-            })
-            .then(data => {
+        fetch(url, options)
+            .then((response) => response.json()) // Parse della risposta JSON
+            .then((data) => {
                 alert('Dati salvati con successo!');
                 console.log('Risposta del server:', data);
             })
             .then(() => {
-                setForm(initialState)
-                closeCallback(false);  // Chiude o resetta il form
+                setForm(initialState); // Reset del form
+                closeCallback(false);  // Chiudi o resetta il form
+            })
+            .catch((error) => {
+                console.error('Errore durante il salvataggio:', error);
+                alert('Si è verificato un errore durante il salvataggio.');
             });
     };
     return (
