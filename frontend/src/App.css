@@ -57,3 +57,13 @@
 .icon{
   cursor: pointer;
 }
+
+.close-modal{
+  height: max-content;
+
+}
+
+.div-close-button{
+  display: flex;                   
+  justify-content: flex-end;
+}

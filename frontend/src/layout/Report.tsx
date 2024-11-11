@@ -10,6 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ReportInformation from './ReportInformation';
 
 localStorage.setItem("user_id", "1");
 const user_id = localStorage.getItem("user_id");
@@ -140,19 +141,21 @@ export default function Report() {
                     className={row.workTimeMinutes >= 8 * 60 ? 'greenText' : 'redText'}>
                     <div className='divStatus' >
                     {row.workTimeMinutes >= 8 * 60 ? 
-                        (<img src="/check_20dp_78A75A_FILL0_wght400_GRAD0_opsz20.svg" alt="Icon" width="20" height="20" className='icon'></img>) : 
-                        (<img src="/error_20dp_EA3323_FILL0_wght400_GRAD0_opsz20.svg" alt="Icon" width="20" height="20" className='icon' />)}
+                        (<img src="/check_20dp_78A75A_FILL0_wght400_GRAD0_opsz20.svg" alt="Icon" width="20" height="20"></img>) : 
+                        (<img src="/error_20dp_EA3323_FILL0_wght400_GRAD0_opsz20.svg" alt="Icon" width="20" height="20"/>)}
                     {`${Math.floor(row.workTimeMinutes / 60)}:${(row.workTimeMinutes % 60).toString().padStart(2, '0')} h`}
                     </div>
                 </TableCell>
                 <TableCell align="right">
-                    <img src="/search_24dp_5985E1_FILL0_wght400_GRAD0_opsz24.png" alt="Icon" width="24" height="24" className='icon' />
+                    {/* <img src="/search_24dp_5985E1_FILL0_wght400_GRAD0_opsz24.png" alt="Icon" width="24" height="24" className='icon' /> */}
+                    <ReportInformation></ReportInformation>
                 </TableCell>
                 </TableRow>
             ))}
             </TableBody>
         </Table>
         </TableContainer>
+
         
   </>);
 }
