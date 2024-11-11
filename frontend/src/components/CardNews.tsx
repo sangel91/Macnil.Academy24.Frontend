@@ -24,7 +24,8 @@ export function CardNews() {
         if (data.length > 0) {
           setUltimaNews(data[data.length -1]); // Seleziona ultima  news (data[.lenght -1])
         }
-  
+    
+        
     };
  useEffect(() => {
     fetchNews();
