@@ -11,7 +11,7 @@ test("renders learn react link 1", () => {
 });
 
 test("renders learn react link 2", () => {
-  const { getByText } = render(
+  render(
     <Provider store={store}>
       <App />
     </Provider>
