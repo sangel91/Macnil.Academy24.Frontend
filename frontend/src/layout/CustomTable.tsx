@@ -37,6 +37,7 @@ export default function CustomTable() {
     <React.Fragment>
       <Title>A table</Title>
       <Table size="small">
+        
         <TableHead>
           <TableRow>
             <TableCell>Column 1</TableCell>
