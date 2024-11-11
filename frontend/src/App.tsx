@@ -8,8 +8,34 @@ import { EntryModel } from "./EntryModel";
 const App: React.FC = () => {
   const [entries, setEntries] = useState<EntryModel[]>([]);
   
-
   
+  const App: React.FC = () => {
+    const [entry, setEntry] = useState<EntryModel | undefined>(undefined);
+  
+    useEffect(() => {
+
+      const fetchedEntry: EntryModel = {
+        hourIn: '2024-11-11T08:00:00',
+        hourOut: '2024-11-11T16:00:00',
+        location: 'Office',
+        id: 0,
+        status: ""
+      };
+      setEntry(fetchedEntry);
+    }, []);
+  
+    return (
+      <div>
+        {entry ? (
+          <EntryCard entry={entry} />
+        ) : (
+          <div>Loading...</div> 
+        )}
+      </div>
+    );
+  };
+  
+
   useEffect(() => {
     axios.get<EntryModel[]>('http://localhost:8080/api/v1/entry')
       .then(response => {
@@ -37,6 +63,7 @@ const App: React.FC = () => {
                 <EntryCard key={entry.id} entry={entry} />
               ))}
             </div>
+            
           }
         />
       </Routes>

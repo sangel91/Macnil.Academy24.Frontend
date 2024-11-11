@@ -5,6 +5,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import * as serviceWorker from "./serviceWorker";
+import MyComponent from "./Components/MyComponent";
 
 
 const root = ReactDOM.createRoot(
@@ -13,9 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Component>
+  
       <App/>
-      </Component>
+     
     </Provider>
   </React.StrictMode>
 );

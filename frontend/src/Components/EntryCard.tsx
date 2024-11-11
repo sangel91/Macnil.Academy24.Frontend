@@ -3,10 +3,14 @@ import './EntryCard.css';
 import { EntryModel } from '../EntryModel';
 
 interface EntryCardProps {
-  entry: EntryModel;
+  entry?: EntryModel; // entry è opzionale
 }
 
 const EntryCard: React.FC<EntryCardProps> = ({ entry }) => {
+  if (!entry) {
+    return <div>Invalid entry data</div>; // Puoi restituire un messaggio di errore o un componente vuoto
+  }
+
   const hourIn = new Date(entry.hourIn);
   const hourOut = new Date(entry.hourOut);
   const duration = ((hourOut.getTime() - hourIn.getTime()) / (1000 * 60 * 60)).toFixed(2);
