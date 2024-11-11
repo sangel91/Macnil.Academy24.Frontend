@@ -3,6 +3,8 @@ import { Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, TextFiel
 import React, { useEffect, useState } from "react";
 
 
+
+
 interface Comune {
     nome: string;
     codice: string;
@@ -23,14 +25,16 @@ const ModalDetail = ({
     isVisible = false,
     closeCallback
 }: ModalDetailInterface) => {
-    const [form, setForm] = useState<FormInterface>({
+    const initialState = {
         location: "",
         date: "",
         time: "",
         action: "",
         notes: ""
-    });
+    }
+    const [form, setForm] = useState<FormInterface>(initialState);
     const [comuni, setComuni] = useState<Comune[]>([]);
+
 
     async function getComuni() {
         const promise = await fetch("./citta.json")
@@ -38,44 +42,50 @@ const ModalDetail = ({
         setComuni(json)
     }
 
+
     useEffect(() => {
         getComuni();
     }, [])
 
+
     const onSave = () => {
-        alert("Salvato");
-        // const formData = {
-        //     location: form.location,
-        //     date: form.date,
-        //     time: form.time,
-        //     action: form.action,
-        //     notes: form.notes
-        // };
+        // Creiamo l'oggetto JSON con i dati da inviare
+        const dataToSend = {
+            location: form.location,
+            date: form.date,
+            hour_in: form.time + ":00", // Aggiungi i minuti per un formato corretto (es. "08:00")
+            hour_out: form.time + ":00", // Se hai bisogno di "hour_out" in futuro
+            action: form.action,
+            notes: form.notes,
+        };
     
-        // // URL a cui inviare i dati
-        // const url = 'https://esempio.com/api/salva-dati'; // Cambia con il tuo endpoint
+        // URL a cui inviare i dati
+        const url = 'http://localhost:8090/api/v1/entry'; // Cambia con il tuo endpoint
     
-        // // Opzioni per la richiesta POST
-        // const opzioni = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(formData) // Dati da inviare nel corpo della richiesta
-        // };
+        // Opzioni per la richiesta POST
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Dichiariamo il formato JSON
+            },
+            body: JSON.stringify(dataToSend), // Serializziamo l'oggetto JSON
+        };
     
-        // // Chiamata POST con fetch
-        // fetch(url, opzioni)
-        //     .then(response => {
-        //         return response.json(); // Parse della risposta JSON
-        //     })
-        //     .then(data => {
-        //         alert('Dati salvati con successo!');
-        //         console.log('Risposta del server:', data);
-        //     })
-        //     .then(() => {
-        //         closeCallback(false);  // Chiude o resetta il form
-        //     });
+        // Chiamata POST con fetch
+        fetch(url, options)
+            .then((response) => response.json()) // Parse della risposta JSON
+            .then((data) => {
+                alert('Dati salvati con successo!');
+                console.log('Risposta del server:', data);
+            })
+            .then(() => {
+                setForm(initialState); // Reset del form
+                closeCallback(false);  // Chiudi o resetta il form
+            })
+            .catch((error) => {
+                console.error('Errore durante il salvataggio:', error);
+                alert('Si è verificato un errore durante il salvataggio.');
+            });
     };
     return (
         <Modal
@@ -86,6 +96,7 @@ const ModalDetail = ({
         >
             <Box sx={style} >
                 <p>Student</p>
+
 
                 <div className="mb-3">
                     <label htmlFor="location-select" className="form-label">Location</label>
@@ -105,6 +116,7 @@ const ModalDetail = ({
                     </select>
                 </div>
 
+
                 <div className="mb-3">
                     <label htmlFor="date-input" className="form-label">Date</label>
                     <input
@@ -116,6 +128,7 @@ const ModalDetail = ({
                     />
                 </div>
 
+
                 <div className="mb-3">
                     <label htmlFor="time-input" className="form-label">Time</label>
                     <input
@@ -126,6 +139,7 @@ const ModalDetail = ({
                         onChange={(event) => setForm({ ...form, time: event.target.value })}
                     />
                 </div>
+
 
                 <div className="mb-3">
                     <label htmlFor="action-select" className="form-label">Action</label>
@@ -141,6 +155,7 @@ const ModalDetail = ({
                     </select>
                 </div>
 
+
                 <div className="mb-3">
                     <label htmlFor="notes-input" className="form-label">Notes</label>
                     <textarea
@@ -151,6 +166,7 @@ const ModalDetail = ({
                     ></textarea>
                 </div>
 
+
                 <div className="d-flex justify-content-end mt-3">
                     <Button onClick={() => closeCallback(false)} >Close</Button>
                     <Button onClick={onSave}>Stamp</Button>
@@ -159,6 +175,7 @@ const ModalDetail = ({
         </Modal>
     );
 };
+
 
 const style = {
     position: 'absolute',
@@ -170,4 +187,4 @@ const style = {
     backgroundColor: 'white',
     borderRadius: '8px',
 };
-export default ModalDetail; 
+export default ModalDetail;

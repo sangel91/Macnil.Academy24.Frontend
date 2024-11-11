@@ -153,6 +153,7 @@ export function DashboardContent() {
           }}
         >
           <Toolbar />
+          
           {/* consente al componente ModalDetail di comunicare con il componente genitore per chiudere la finestra modale. */}
           <ModalDetail closeCallback={setModalVisibilty} isVisible={isModalOpen} />
           {/* Potrei anche utilizzare la proprietà SX per definire rapidamente gli stili in-line direttamente all'interno dei componenti */}
