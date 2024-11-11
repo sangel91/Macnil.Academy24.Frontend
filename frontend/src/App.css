@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.redText {
+  color: red !important;
+}
+
+.greenText{
+  color:green !important;
+}
+
+.divStatus{
+  border: solid, 1px;
+  border-radius: 20px;
+  width: 80px;
+  margin:auto;
+  display: flex;
+  justify-content: center;  
+}
+
+.icon{
+  cursor: pointer;
+}
+
+.close-modal{
+  height: max-content;
+
+}
+
+.div-close-button{
+  display: flex;                   
+  justify-content: flex-end;
+}

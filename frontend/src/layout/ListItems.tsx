@@ -52,7 +52,14 @@ export function MainListItems(props: MainListItemsProps)  {
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Page 3" />
+      <ListItemText primary="Report" onClick={() => 
+        {
+          if (!!props?.callback) {
+          props.callback("Report");
+        }
+          navigate("Report"); 
+        }
+      }/>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>

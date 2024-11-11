@@ -16,6 +16,7 @@ import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import { MainListItems } from "./ListItems";
 import { Page1Content } from "./Page1";
+import Report from "./Report";
 
 const drawerWidth: number = 240;
 
@@ -153,6 +154,7 @@ export function DashboardContent() {
           <Toolbar />
           <Routes>
             <Route path="/page1"  element={<Page1Content /> } />
+            <Route path="/report" element={<Report />} /> 
           </Routes>
           
         </Box>
