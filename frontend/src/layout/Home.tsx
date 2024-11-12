@@ -44,7 +44,7 @@ const News: React.FC = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`, // Aggiungi il token nell'intestazione Authorization
+            //"Authorization": `Bearer ${token}`, // Aggiungi il token nell'intestazione Authorization ////////////////////////// decommento altrimenti il token non funziona
           },
         });
 
@@ -238,3 +238,15 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout, children }) => {
 };
 
 export default HomePage;
+
+
+/////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
