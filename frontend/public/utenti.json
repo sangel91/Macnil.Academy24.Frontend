@@ -1,0 +1,17 @@
+
+
+[
+    {
+      "email": "user@user.it",
+      "password": "user",
+      "token": "dummy_user_token",
+      "role": "USER"
+    },
+    {
+      "email": "admin@admin.it",
+      "password": "admin",
+      "token": "dummy_admin_token",
+      "role": "ADMIN"
+    }
+  ]
+  
